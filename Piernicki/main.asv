@@ -1,5 +1,3 @@
-%text = 'Test';
-
 %NADAJNIK
 %Formatowanie danych do przesy³u
 disp("Text to transmit: " + text);
@@ -44,7 +42,6 @@ time = [];
 ASK_signal = [];
 Digital_signal = [];
 for ii = 1: 1: length(bitStream)
-    
     ASK_signal = [ASK_signal (bitStream(ii)==0)*amplitude1*sin(2*pi*f*t)+...
         (bitStream(ii)==1)*amplitude2*sin(2*pi*f*t)];
     
@@ -53,13 +50,11 @@ for ii = 1: 1: length(bitStream)
 end
 
 %Wykres sygna³u
-% subplot(5,1,1);
 axes(handles.axes1)
-plot(time,ASK_signal,'LineWidth',1);
+plot(ASK_signal,'LineWidth',1);
 xlabel('n')
 ylabel('zakodowane(n)')
 title('Przebieg sygna³u w funkcji czasu');
-%axis([0 time(end) 1.5 1.5]);
 grid  on;
 
 %Obliczanie spektrum amplitudowego
@@ -67,7 +62,6 @@ spectrum = fft(ASK_signal);
 spectrum_amp = abs(spectrum);
 
 %Wykres spektrum aplitudowe
-%subplot(5,1,2);
 axes(handles.axes2)
 plot(spectrum_amp);
 xlabel('Spectral Index[Hz]');
@@ -95,7 +89,7 @@ ASK_signal_with_noise = awgn(ASK_signal, snr);
 
 d1 = designfilt('lowpassiir','FilterOrder',12, ...
     'HalfPowerFrequency',0.15,'DesignMethod','butter');
-y = filtfilt(d1,x);
+% y = filtfilt(d1,x);
 ASK_signal_filtered = filtfilt(d1, ASK_signal_with_noise);
 
 
